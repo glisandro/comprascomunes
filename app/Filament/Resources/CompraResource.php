@@ -17,7 +17,7 @@ use App\Filament\Resources\ComprasResource\RelationManagers\PedidosRelationManag
 
 class CompraResource extends Resource
 {
-    protected static ?string $model = Compra::class;
+    protected static ?string $model = compra::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

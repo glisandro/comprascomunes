@@ -27,7 +27,7 @@ use App\Filament\Resources\PedidoResource\RelationManagers;
 
 class PedidoResource extends Resource
 {
-    protected static ?string $model = Pedido::class;
+    protected static ?string $model = pedido::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
