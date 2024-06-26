@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Compra;
-use App\Models\Pedido;
+use App\Models\compra;
+use App\Models\pedido;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Producto;
