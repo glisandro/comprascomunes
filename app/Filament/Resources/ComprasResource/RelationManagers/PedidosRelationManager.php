@@ -4,7 +4,7 @@ namespace App\Filament\Resources\ComprasResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\compra;
+use App\Models\Compra;
 use Filament\Forms\Get;
 use App\Models\Producto;
 use Filament\Forms\Form;

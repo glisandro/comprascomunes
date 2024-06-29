@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\Estado;
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\compra;
+use App\Models\Compra;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
