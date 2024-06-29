@@ -7,8 +7,7 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Columns\NumberColumn;
 use Filament\Tables\Table;
-use App\Models\PedidosDetalle;
-use App\Models\pedidos_detalle;
+use App\Models\PedidoDetalle;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -20,7 +19,7 @@ use App\Filament\Resources\PedidosDetalleResource\RelationManagers;
 
 class PedidosDetalleResource extends Resource
 {
-    protected static ?string $model = pedidos_detalle::class;
+    protected static ?string $model = PedidoDetalle::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -40,17 +39,23 @@ class PedidosDetalleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('pedido_id')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('producto.nombre')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('pedido.compra.id')
-                    ->sortable(),
-                //TextColumn::make('cantidad')->label('Cantidad')->sum(),
-                
                 Tables\Columns\TextColumn::make('pedido.compra.titulo')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('pedido.user.name')
+                    ->label('Pedido por')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('producto.nombre')
+                    ->sortable(),
+                
+                //TextColumn::make('cantidad')->label('Cantidad')->sum(),
+                
+                
                 Tables\Columns\TextColumn::make('cantidad')
                     ->sortable()
-                    ->summarize(Sum::make())
+                    ->summarize(Sum::make()),
+                Tables\Columns\TextColumn::make('producto.unidad')
+                    ->label('Unidad')
+                    ->sortable()
             ])
             ->filters([
                 SelectFilter::make('pedido')

@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('full_titulo')->virtualAs('concat(titulo, \' \', fecha_compra)');
+            //$table->string('full_titulo')->virtualAs('concat(titulo, \' \', fecha_compra)');
             $table->string('descripcion');
-            $table->date('abierta_desde');
-            $table->date('abierta_hasta');
             $table->date('fecha_compra');
             
             //Mas fechas?
-            $table->enum('estado',['Abierta', 'Cerrada', 'Cancelada']);
+            $table->enum('estado', ['new', 'open', 'closed', 'cancelled']);
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductoResource\Pages;
+use App\Filament\Resources\ProductosResource\Pages;
 use App\Filament\Resources\ProductoResource\RelationManagers;
 use App\Models\Producto;
 use Filament\Forms;
@@ -13,11 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductoResource extends Resource
+class ProductosResource extends Resource
 {
     protected static ?string $model = Producto::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Configuración';
 
     public static function form(Form $form): Form
     {
@@ -74,8 +76,8 @@ class ProductoResource extends Resource
     {
         return [
             'index' => Pages\ListProductos::route('/'),
-            'create' => Pages\CreateProducto::route('/create'),
-            'edit' => Pages\EditProducto::route('/{record}/edit'),
+            'create' => Pages\CreateProductos::route('/create'),
+            'edit' => Pages\EditProductos::route('/{record}/edit'),
         ];
     }
 }

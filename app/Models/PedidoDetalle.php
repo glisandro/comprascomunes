@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class pedidos_detalle extends Model
+class PedidoDetalle extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $table = 'pedidos_detalles';
 
     public function pedido()
     {

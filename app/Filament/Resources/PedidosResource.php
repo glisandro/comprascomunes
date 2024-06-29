@@ -21,15 +21,17 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\CreateAction;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
-use App\Filament\Resources\PedidoResource\Pages;
+use App\Filament\Resources\PedidosResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PedidoResource\RelationManagers;
 
-class PedidoResource extends Resource
+class PedidosResource extends Resource
 {
-    protected static ?string $model = pedido::class;
+    protected static ?string $model = Pedido::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {
@@ -59,19 +61,16 @@ class PedidoResource extends Resource
                     }),
                 Forms\Components\TextInput::make('Observaciones')
                     ->placeholder('Acá podés agregar un compentario sobre tu pedido'),
-                Repeater::make('pedidos_detalles')
+                Repeater::make('pedidodetalle')
                     ->addActionLabel('Agregar producto')
                     ->label('Productos')
                     ->relationship()
                     ->schema([
                         Select::make('producto_id')
                             ->afterStateUpdated(function ($state, callable $set) {
-                                //$producto = Producto::find($state);
-                                //$set('unidad', $producto->unidad ?? null);
                                 if($state === null) {
                                     $set('cantidad', null);
                                 }
-                                
                             })
                             ->live()
                             ->native(false)
@@ -90,7 +89,6 @@ class PedidoResource extends Resource
                                 
                                 return $unidad ?? '';
                             })
-                        
                     ])
                     ->columns(3),
         ]);
@@ -108,10 +106,10 @@ class PedidoResource extends Resource
                 Tables\Columns\TextColumn::make('Observaciones')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('pedidos_detalles')
+                Tables\Columns\TextColumn::make('pedidodetalle')
                     ->label('Productos')
                     ->formatStateUsing(function ($record) {
-                        $productos = $record->pedidos_detalles->map(function ($detalle) {
+                        $productos = $record->pedidodetalle->map(function ($detalle) {
                             return $detalle->producto->nombre . ' (' . $detalle->cantidad . ' '  . $detalle->producto->unidad . ')'  ;
                         });
 
@@ -140,7 +138,6 @@ class PedidoResource extends Resource
             ])
             ->groups([
                 'compra.titulo',
-                'user.name',
             ])
             ->defaultGroup('compra.titulo');
     }
@@ -156,8 +153,8 @@ class PedidoResource extends Resource
     {
         return [
             'index' => Pages\ListPedidos::route('/'),
-            'create' => Pages\CreatePedido::route('/create'),
-            'edit' => Pages\EditPedido::route('/{record}/edit'),
+            'create' => Pages\CreatePedidos::route('/create'),
+            'edit' => Pages\EditPedidos::route('/{record}/edit'),
         ];
     }
 }

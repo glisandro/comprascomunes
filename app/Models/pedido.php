@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class pedido extends Model
+class Pedido extends Model
 {
     use HasFactory;
 
@@ -37,8 +37,8 @@ class pedido extends Model
         return $this->belongsTo(compra::class);
     }
 
-    public function pedidos_detalles()
+    public function pedidodetalle()
     {
-        return $this->hasMany(pedidos_detalle::class);
+        return $this->hasMany(pedidodetalle::class);
     }
 }

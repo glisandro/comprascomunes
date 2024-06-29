@@ -28,30 +28,34 @@ class PedidosRelationManager extends RelationManager
         return $form
             ->schema([
                 
-                
-                Forms\Components\TextInput::make('Observaciones')
-                    ->placeholder('Acá podés agregar un compentario sobre tu pedido'),
-                Repeater::make('pedidos_detalles')
+                Repeater::make('pedidoDetalle')
                     ->addActionLabel('Agregar producto')
                     ->label('Productos')
                     ->relationship()
                     ->schema([
                         Select::make('producto_id')
                             ->afterStateUpdated(function ($state, callable $set) {
-                                //$producto = Producto::find($state);
-                                //$set('unidad', $producto->unidad ?? null);
                                 if($state === null) {
                                     $set('cantidad', null);
                                 }
-                                
                             })
                             ->live()
+                            ->searchable()
+                            ->preload()
+                            ->placeholder('Seleccione un producto')
                             ->native(false)
                             ->relationship(
                                 name: 'producto',
                                 titleAttribute: 'nombre',
                             )
                             //->label('Producto')
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('nombre')
+                                    ->required(),
+                                Forms\Components\TextInput::make('descripcion'),
+                                Forms\Components\TextInput::make('unidad')
+                                    ->required(),
+                            ])
                             ->required(),
                         TextInput::make('cantidad')
                             ->numeric()
@@ -65,6 +69,9 @@ class PedidosRelationManager extends RelationManager
                         
                     ])
                     ->columns(3),
+                
+                Forms\Components\TextInput::make('Observaciones')
+                    ->placeholder('Acá podés agregar un compentario sobre tu pedido'),
             ])
             ->columns(1);
     }
@@ -93,14 +100,19 @@ class PedidosRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+            ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make()
+                    ->label('Nuevo Pedido')
+                  ->createAnother(false)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     BulkAction::make('viewDetails')
-                    ->label('Ver Detalles')
+                    ->label('Ver Listado de compras')
                     ->action(function ($records) {
                         // Extraer IDs de los registros
                         $pedidoIds = $records->pluck('id')->toArray();
@@ -112,5 +124,15 @@ class PedidosRelationManager extends RelationManager
                   
                 ]),
             ]);
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->previousUrl ?? $this->getResource()::getUrl('index');
+    }
+
+    public function isReadOnly(): bool
+    {
+        return false;
     }
 }

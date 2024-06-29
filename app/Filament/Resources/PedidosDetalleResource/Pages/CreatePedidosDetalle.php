@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePedidosDetalle extends CreateRecord
 {
     protected static string $resource = PedidosDetalleResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->previousUrl ?? $this->getResource()::getUrl('index');
+    }
 }
