@@ -21,6 +21,6 @@ class Compra extends Model
 
     public function pedidos()
     {
-        return $this->hasMany(pedido::class);
+        return $this->hasMany(Pedido::class);
     }
 }
