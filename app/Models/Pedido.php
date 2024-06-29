@@ -34,7 +34,7 @@ class Pedido extends Model
 
     public function compra(): BelongsTo
     {
-        return $this->belongsTo(compra::class);
+        return $this->belongsTo(Compra::class);
     }
 
     public function pedidodetalle()
