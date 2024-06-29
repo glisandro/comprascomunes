@@ -39,6 +39,6 @@ class Pedido extends Model
 
     public function pedidodetalle()
     {
-        return $this->hasMany(pedidodetalle::class);
+        return $this->hasMany(Pedidodetalle::class);
     }
 }
