@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('team_id')->default(1);
+            $table->foreignId('user_id');
             $table->string('titulo');
             //$table->string('full_titulo')->virtualAs('concat(titulo, \' \', fecha_compra)');
             $table->string('descripcion');
             $table->date('fecha_compra');
-            
-            //Mas fechas?
-            $table->enum('estado', ['new', 'open', 'closed', 'cancelled']);
+            $table->string('estado');
             $table->timestamps();
         });
     }

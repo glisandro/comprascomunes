@@ -53,12 +53,12 @@ class PedidosResource extends Resource
                     ->placeholder('Seleccione en que compra quiere realizar su pedido')
                     ->getOptionLabelUsing(fn ($value): ?string => '')
                     ->required(),
-                Placeholder::make('InfoCompra')
+                /*Placeholder::make('InfoCompra')
                     ->content(function (Get $get, Set $set): string {
                         $compra = Compra::find($get('compra_id'));
                         
                         return $compra?->descripcion .' - '. $compra?->fecha_compra ?? '';
-                    }),
+                    }),*/
                 Forms\Components\TextInput::make('Observaciones')
                     ->placeholder('Acá podés agregar un compentario sobre tu pedido'),
                 Repeater::make('pedidodetalle')
@@ -83,11 +83,11 @@ class PedidosResource extends Resource
                         TextInput::make('cantidad')
                             ->numeric()
                             ->required(),
-                        Placeholder::make('unidad')
+                        Placeholder::make('unidad_medida')
                             ->content(function (Get $get, Set $set): string {
-                                $unidad = Producto::find($get('producto_id'))?->unidad;
+                                $unidad_medida = Producto::find($get('producto_id'))?->unidad_medida;
                                 
-                                return $unidad ?? '';
+                                return $unidad_medida ?? '';
                             })
                     ])
                     ->columns(3),
@@ -110,7 +110,7 @@ class PedidosResource extends Resource
                     ->label('Productos')
                     ->formatStateUsing(function ($record) {
                         $productos = $record->pedidodetalle->map(function ($detalle) {
-                            return $detalle->producto->nombre . ' (' . $detalle->cantidad . ' '  . $detalle->producto->unidad . ')'  ;
+                            return $detalle->producto->nombre . ' (' . $detalle->cantidad . ' '  . $detalle->producto->unidad_medida . ')'  ;
                         });
 
                         // Envolver cada producto en un párrafo <p>

@@ -21,4 +21,23 @@ class CreatePedidos extends CreateRecord
     {
         $this->redirect($this->getResource()::getUrl('index'));
     }
+
+    protected function beforeCreate(): void
+{
+    if (! $this->record->team->subscribed()) {
+        Notification::make()
+            ->warning()
+            ->title('You don\'t have an active subscription!')
+            ->body('Choose a plan to continue.')
+            ->persistent()
+            ->actions([
+                Action::make('subscribe')
+                    ->button()
+                    ->url(route('subscribe'), shouldOpenInNewTab: true),
+            ])
+            ->send();
+    
+        $this->halt();
+    }
+}
 }

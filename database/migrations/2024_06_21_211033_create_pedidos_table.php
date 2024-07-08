@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('compra_id');
+            $table->foreignId('team_id')->default(1);
             $table->foreignId('user_id');
+            $table->foreignId('compra_id');
             $table->string('observaciones')->nullable();
             $table->timestamps();
         });

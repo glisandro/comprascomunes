@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ComprasResource\RelationManagers;
 
+use App\Enums\EstadoCompra;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Compra;
@@ -13,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Repeater;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
@@ -53,18 +55,18 @@ class PedidosRelationManager extends RelationManager
                                 Forms\Components\TextInput::make('nombre')
                                     ->required(),
                                 Forms\Components\TextInput::make('descripcion'),
-                                Forms\Components\TextInput::make('unidad')
+                                Forms\Components\TextInput::make('unidad_medida')
                                     ->required(),
                             ])
                             ->required(),
                         TextInput::make('cantidad')
                             ->numeric()
                             ->required(),
-                        Placeholder::make('unidad')
+                        Placeholder::make('unidad_medida')
                             ->content(function (Get $get): string {
-                                $unidad = Producto::find($get('producto_id'))?->unidad;
+                                $unidad_medida = Producto::find($get('producto_id'))?->unidad_medida;
                                 
-                                return $unidad ?? '';
+                                return $unidad_medida ?? '';
                             })
                         
                     ])
@@ -133,6 +135,8 @@ class PedidosRelationManager extends RelationManager
 
     public function isReadOnly(): bool
     {
-        return false;
+        $compra = $this->getOwnerRecord();
+
+        return $compra->estado !== EstadoCompra::Open;
     }
 }

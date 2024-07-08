@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('team_id')->default(1);
+            $table->foreignId('user_id');
             $table->string('nombre');
-            $table->string('descripcion')->nullable();
-            $table->string('unidad');
+            $table->string('unidad_medida');
             $table->timestamps();
         });
     }

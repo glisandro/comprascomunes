@@ -27,8 +27,7 @@ class ProductosResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('nombre')
                     ->required(),
-                Forms\Components\TextInput::make('descripcion'),
-                Forms\Components\TextInput::make('unidad')
+                Forms\Components\TextInput::make('unidad_medida')
                     ->required(),
             ]);
     }
@@ -39,9 +38,7 @@ class ProductosResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('descripcion')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('unidad')
+                Tables\Columns\TextColumn::make('unidad_medida')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

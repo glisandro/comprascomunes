@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Estado;
+use App\Enums\EstadoCompra;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,8 +15,13 @@ class Compra extends Model
     protected function casts(): array
     {
         return [
-            'estado' => Estado::class,
+            'estado' => EstadoCompra::class,
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function pedidos()

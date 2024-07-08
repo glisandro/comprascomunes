@@ -49,11 +49,10 @@ class PedidosDetalleResource extends Resource
                 
                 //TextColumn::make('cantidad')->label('Cantidad')->sum(),
                 
-                
                 Tables\Columns\TextColumn::make('cantidad')
                     ->sortable()
                     ->summarize(Sum::make()),
-                Tables\Columns\TextColumn::make('producto.unidad')
+                Tables\Columns\TextColumn::make('producto.unidad_medida')
                     ->label('Unidad')
                     ->sortable()
             ])

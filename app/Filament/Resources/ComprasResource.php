@@ -2,13 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\Estado;
 use Filament\Forms;
 use Filament\Tables;
+use App\Enums\EstadoCompra;
 use App\Models\Compra;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\Layout\Panel;
 use Filament\Tables\Columns\Layout\Split;
@@ -37,39 +38,40 @@ class ComprasResource extends Resource
                     ->disabledOn('edit')
                     ->required(),
                 Forms\Components\Select::make('estado')
-                    ->options(Estado::class)
+                    ->options(EstadoCompra::class)
                     ->required(),
-            ])
-            ;
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Split::make([
+                //Split::make([
                     Tables\Columns\TextColumn::make('titulo')
+                        ->weight(FontWeight::Bold)
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('descripcion')
-                        ->searchable(),
+                    Tables\Columns\TextColumn::make('descripcion'),
+                        //->searchable(),
                     Tables\Columns\TextColumn::make('fecha_compra')
-                        ->date()
-                        ->sortable(),
+                        ->date(),
+                        //->sortable(),
                     Tables\Columns\TextColumn::make('estado')
                         //->options(Estado::class),
                         //->hiddenFrom('sm'),
                     ,
+                    //Tables\Columns\TextColumn::make('user.id'),
                     Tables\Columns\TextColumn::make('created_at')
                         ->dateTime()
-                        ->sortable()
+                        //->sortable()
                         ->toggleable(isToggledHiddenByDefault: true)
-                        ->hiddenFrom('sm'),
+                        ->hiddenFrom('md'),
                     Tables\Columns\TextColumn::make('updated_at')
                         ->dateTime()
-                        ->sortable()
+                        //->sortable()
                         ->toggleable(isToggledHiddenByDefault: true)
-                        ->hiddenFrom('sm'),
-                ])->from('md')
+                        ->hiddenFrom('md'),
+                //])->from('sm')
             ])
             ->filters([
                 //
@@ -80,7 +82,7 @@ class ComprasResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
