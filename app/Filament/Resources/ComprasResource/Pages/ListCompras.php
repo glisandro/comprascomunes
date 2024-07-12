@@ -12,8 +12,18 @@ class ListCompras extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        return [
+        $actions = [];
+
+        // Chequear si el usuario autenticado es administrador
+        if (auth()->user()->admin) {
+            $actions[] = Actions\CreateAction::make('create');
+                /*->label('Create New Record')
+                ->url(route('your.resource.create'));*/
+        }
+
+        return $actions;
+        /*return [
             Actions\CreateAction::make(),
-        ];
+        ];*/
     }
 }

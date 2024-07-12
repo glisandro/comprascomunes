@@ -47,7 +47,7 @@ class ComprasResource extends Resource
     {
         return $table
             ->columns([
-                //Split::make([
+                Split::make([
                     Tables\Columns\TextColumn::make('titulo')
                         ->weight(FontWeight::Bold)
                         ->searchable(),
@@ -61,25 +61,27 @@ class ComprasResource extends Resource
                         //->hiddenFrom('sm'),
                     ,
                     //Tables\Columns\TextColumn::make('user.id'),
-                    Tables\Columns\TextColumn::make('created_at')
+                    /*sTables\Columns\TextColumn::make('created_at')
                         ->dateTime()
                         //->sortable()
                         ->toggleable(isToggledHiddenByDefault: true)
-                        ->hiddenFrom('md'),
-                    Tables\Columns\TextColumn::make('updated_at')
+                        ->hiddenFrom('sm'),
+                    ables\Columns\TextColumn::make('updated_at')
                         ->dateTime()
                         //->sortable()
                         ->toggleable(isToggledHiddenByDefault: true)
-                        ->hiddenFrom('md'),
-                //])->from('sm')
+                        ->hiddenFrom('sm'),*/
+                ])->from('sm')
             ])
             ->filters([
                 //
             ])
             ->actions([
                 //Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->label('Seleccionar para cargar un pedido'),
             ])
+            
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     //Tables\Actions\DeleteBulkAction::make(),

@@ -17,7 +17,7 @@ enum EstadoCompra: string implements HasColor, HasIcon, HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::Open => 'Abierta',
+            self::Open => 'Activa',
             self::Closed => 'Cerrada',
             self::Cancelled => 'Cancelada',
         };
