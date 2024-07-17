@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->text('pregunta');
             $table->text('respuesta');
-            $table->text('tags');
             $table->timestamps();
         });
     }
