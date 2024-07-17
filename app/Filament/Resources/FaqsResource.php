@@ -5,21 +5,26 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Faqs;
 use Filament\Tables;
+use Spatie\Tags\Tag;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Tables\Columns\TagsColumn;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Filament\Support\Enums\FontWeight;
+use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+//use Filament\Forms\Components\SpatieTagsInput;
+use App\Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\MorphToSelect;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use App\Filament\Resources\FaqsResource\Pages;
-use Filament\Forms\Components\SpatieTagsInput;
+use App\Filament\Forms\Components\SpatieTagsInput;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\FaqsResource\RelationManagers;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
@@ -39,13 +44,17 @@ class FaqsResource extends Resource
     {
         return $form
             ->schema([
-                RichEditor::make('pregunta')
+                Forms\Components\Textarea::make('pregunta')
                     ->required()
                     ->columnSpanFull(),
                 RichEditor::make('respuesta')
                     ->required()
                     ->columnSpanFull(),
-                SpatieTagsInput::make('tags')
+                //SpatieTagsInput::make('tags'),
+                Select::make('tags')
+                    ->relationship(name: 'tags', titleAttribute: 'name')
+                    ->multiple()
+                    ->preload()
             ]);
     }
 
@@ -53,57 +62,47 @@ class FaqsResource extends Resource
     {
         return $table
             ->columns([
-                Stack::make([
+                
                     Tables\Columns\TextColumn::make('pregunta')
                         
                         ->weight(FontWeight::Bold)
-                        ->limit(100)
+                        ->limit(30)
                         ->html()
                         ->searchable(),
                     Tables\Columns\TextColumn::make('respuesta')
                         
-                        ->limit(300)
+                        ->limit(75)
                         ->html()
                         ->searchable(),
                     Tables\Columns\TextColumn::make('tags.name')
                         //->color('primary')
                         //->html()
                         ->badge()
-                        ->searchable()
-                ])
+                        ->searchable(),
+
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('updated_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                
             ])
             ->filters([
                 SelectFilter::make('tags')
                     ->multiple()
                     ->preload()
                     ->relationship('tags', 'name') 
-                /*SelectFilter::make('tags')
-                    ->options(function () {
-                        return Faqs::all()
-                            ->pluck('tags')
-                            ->flatten()
-                            ->unique()
-                            ->filter()
-                            ->mapWithKeys(fn($tag) => [$tag => $tag])
-                            ->toArray();
-                    })
-                    ->multiple()
-    
-                ->query(function ($query, array $data) {
-
-                    if(count($data['values']) > 0) {
-                        foreach ($data as $index => $value) {
-                            if ($index === 0) {
-                                $query->whereRaw('JSON_CONTAINS(tags, ?)', [json_encode($value)]);
-                            } else {
-                                $query->orWhereRaw('JSON_CONTAINS(tags, ?)', [json_encode($value)]);
-                            }
-                        }
-                    }
-                })*/
+                
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->label('Ver'),
+                Tables\Actions\EditAction::make()
+                    ->label('Editar'),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -125,6 +124,7 @@ class FaqsResource extends Resource
             'index' => Pages\ListFaqs::route('/'),
             'create' => Pages\CreateFaqs::route('/create'),
             'edit' => Pages\EditFaqs::route('/{record}/edit'),
+            'view' => Pages\ViewFaqs::route('/{record}/view'),
         ];
     }
 }
