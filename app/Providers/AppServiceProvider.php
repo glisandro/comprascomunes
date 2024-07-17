@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Tickets;
-use App\Models\faqs;
+use App\Models\Faqs;
 use Filament\Facades\Filament;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\View\View;
@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
             PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE ,
             function () {
 
-                $tags = faqs::all()
+                $tags = Faqs::all()
                             ->pluck('tags')
                             ->flatten()
                             ->unique()

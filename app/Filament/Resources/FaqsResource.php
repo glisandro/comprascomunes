@@ -79,7 +79,7 @@ class FaqsResource extends Resource
                     ->relationship('tags', 'name') 
                 /*SelectFilter::make('tags')
                     ->options(function () {
-                        return faqs::all()
+                        return Faqs::all()
                             ->pluck('tags')
                             ->flatten()
                             ->unique()

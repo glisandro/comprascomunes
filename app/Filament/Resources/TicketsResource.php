@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use App\Models\faqs;
+use App\Models\Faqs;
 use Filament\Tables;
 use App\Models\Tickets;
 use Filament\Forms\Form;
@@ -21,7 +21,7 @@ use App\Filament\Resources\TicketsResource\RelationManagers;
 
 class TicketsResource extends Resource
 {
-    protected static ?string $model = faqs::class;
+    protected static ?string $model = Faqs::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -78,7 +78,7 @@ class TicketsResource extends Resource
             ->filters([     
                 /*SelectFilter::make('tags')
                     ->options(function () {
-                        return faqs::all()
+                        return Faqs::all()
                             ->pluck('tags')
                             ->flatten()
                             ->unique()
