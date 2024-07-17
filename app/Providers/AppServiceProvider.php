@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Tickets;
+use App\Models\faqs;
+use Filament\Facades\Filament;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\ServiceProvider;
@@ -48,5 +51,29 @@ class AppServiceProvider extends ServiceProvider
             ]),
             scopes: \App\Filament\Resources\ComprasResource\Pages\ViewCompras::class
         );
+
+        /*FilamentView::registerRenderHook(
+
+            
+            PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE ,
+            function () {
+
+                $tags = faqs::all()
+                            ->pluck('tags')
+                            ->flatten()
+                            ->unique()
+                            ->filter()
+                            ->mapWithKeys(fn($tag) => [$tag => $tag])
+                            ->toArray();
+                return view('hooks.message', [
+                                'tags' => $tags
+                ]);
+
+            } ,
+            scopes: \App\Filament\Resources\FaqsResource\Pages\ListFaqs::class
+        );*/
+
+        //Filament::registerTable(Tickets::class);
+        
     }
 }
