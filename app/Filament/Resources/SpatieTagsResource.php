@@ -52,7 +52,7 @@ class SpatieTagsResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])->defaultSort('name', 'desc');
+            ])->defaultSort('name');
     }
 
     public static function getRelations(): array
