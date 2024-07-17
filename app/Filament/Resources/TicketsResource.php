@@ -75,6 +75,7 @@ class TicketsResource extends Resource
                     ->sortable(),
                     //->toggleable(isToggledHiddenByDefault: true),
             ])
+            
             ->filters([     
                 /*SelectFilter::make('tags')
                     ->options(function () {
@@ -113,7 +114,9 @@ class TicketsResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
+        $query = static::getModel()::query();
+
+        return $query
             ->whereColumn('updated_at', '<>' , 'created_at')
             ->orderByDesc('updated_at', 0)
             ->limit(1);
