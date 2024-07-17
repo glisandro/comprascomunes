@@ -12,8 +12,4 @@ class Faqs extends Model
     use HasTags;
 
     protected $guarded = [];
-
-    /*protected $casts = [
-        'tags' => 'array',
-    ];*/
 }

@@ -8,13 +8,14 @@ use Spatie\Tags\Tag;
 use Filament\Forms\Form;
 use App\Models\SpatieTags;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rule;
 use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SpatieTagsResource\Pages;
 use App\Filament\Resources\SpatieTagsResource\RelationManagers;
-use Filament\Tables\Columns\TextColumn;
 
 class SpatieTagsResource extends Resource
 {
@@ -29,6 +30,7 @@ class SpatieTagsResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    
                     ->required(),
             ]);
     }
@@ -50,7 +52,7 @@ class SpatieTagsResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])->defaultSort('name', 'desc');
     }
 
     public static function getRelations(): array
