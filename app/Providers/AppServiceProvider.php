@@ -28,10 +28,6 @@ class AppServiceProvider extends ServiceProvider
             fn (): View => view('hooks.login-before'),
         );
 
-        /*FilamentView::registerRenderHook(
-            TablesRenderHook::SELECTION_INDICATOR_ACTIONS_BEFORE,
-            fn (): View => view('hooks.compras-before'),
-        );*/
 
         FilamentView::registerRenderHook(
             PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE ,
